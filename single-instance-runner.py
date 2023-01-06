@@ -30,7 +30,7 @@ def run(basedir, executable, identifier, results_file, num_par, parallel, args):
         basedir = "."
 
     e_full_path = os.path.join(basedir, executable)
-
+    args = args.split(",")
     num_threads = None
     if parallel == "MPI":
         e_full_path = "mpirun -np %d %s" % (num_par, e_full_path)
