@@ -40,7 +40,7 @@ def submit_job_for_run(exe, num_par, identifier, artifacts_path, basedir):
     command_to_run += ["--results-file", results_file_name]
     command_to_run += ["--basedir", basedir]
     command_to_run += ["--executable", exe["full_path"]]
-    command_to_run += ["--args", args]
+    command_to_run += ["--args", ",".join(args)]
     command_to_run += ["--parallel", "MPI"]
 
     command_to_run = " ".join(command_to_run)
