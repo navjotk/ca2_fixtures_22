@@ -31,19 +31,22 @@ def compile(basedir, artifacts_path):
     return successful_compilations
 
 
-def submit_job_for_run(exe, num_threads, identifier, artifacts_path, basedir):
+def submit_job_for_run(exe, num_par, identifier, artifacts_path, basedir):
     args = [x.format_map({'artifacts_path': artifacts_path}) for x in exe["args"]]
     results_file_name = os.path.join(basedir, "iresults.csv")
     command_to_run = ["python", os.path.join(artifacts_path, "single-instance-runner.py")]
-    command_to_run += ["--num-threads", str(num_threads)]
+    command_to_run += ["--num-par", str(num_par)]
     command_to_run += ["--identifier", str(identifier)]
     command_to_run += ["--results-file", results_file_name]
-    command_to_run += ["--executable", "%s,%s" % (exe["full_path"], ",".join(args))]
+    command_to_run += ["--basedir", basedir]
+    command_to_run += ["--executable", exe["full_path"]]
+    command_to_run += ["--args", args]
+    command_to_run += ["--parallel", "MPI"]
 
     command_to_run = " ".join(command_to_run)
     slurm_template = os.path.join(artifacts_path, "slurm_template.tpl")
     return submit_slurm_job([command_to_run], slurm_template, cwd=basedir,
-                            time_limit=60, num_cores=num_threads)
+                            time_limit=60, num_cores=1, num_tasks=num_par)
 
 @click.command()
 @click.option('--basedir', default=None, help='Directory to find executables')
@@ -57,17 +60,17 @@ def run(basedir, identifier, artifacts_path):
     
     executables = compile(basedir, artifacts_path)
 
-    max_threads = 33
-    thread_nums = []
-    threadnum = 1
-    while threadnum < max_threads:
-        thread_nums.append(threadnum)
-        threadnum *= 2
-    thread_nums = list(reversed(thread_nums))
+    max_ranks = 33
+    rank_nums = []
+    ranknum = 1
+    while ranknum < max_ranks:
+        rank_nums.append(ranknum)
+        ranknum *= 2
+    rank_nums = list(reversed(rank_nums))
 
     job_ids = []
     for e in executables:
-        for c in thread_nums:
+        for c in rank_nums:
             job_id = submit_job_for_run(e, c, identifier, artifacts_path, basedir)
             job_ids.append(job_id)
 

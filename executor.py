@@ -4,7 +4,7 @@ import subprocess
 from contexttimer import Timer
 
 
-def run_executable(executable, args, num_threads, num_runs=1):
+def run_executable(executable, args, num_threads=None, num_runs=1):
     command = executable
     
     if args is not None:
@@ -13,9 +13,12 @@ def run_executable(executable, args, num_threads, num_runs=1):
     print("Command: %s (%d threads)" % (command, num_threads))
 
     c = shlex.split(command)
+
     my_env = os.environ.copy()
-    my_env['OMP_NUM_THREADS'] = str(num_threads)
-    my_env['KMP_AFFINITY'] = 'scatter'
+    
+    if num_threads is not None:
+        my_env['OMP_NUM_THREADS'] = str(num_threads)
+        my_env['KMP_AFFINITY'] = 'scatter'
     
     
     timings = []
