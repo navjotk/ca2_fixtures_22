@@ -1,0 +1,8 @@
+https://www.dropbox.com/s/xankyfi5i82uy7r/a1.dat?dl=1 a1.dat
+https://www.dropbox.com/s/uyb6wgyt1qdegj5/b1.dat?dl=1 b1.dat
+https://www.dropbox.com/s/c5egrqgetcj3tds/c1.dat?dl=1 c1.dat
+https://www.dropbox.com/s/oi8koofl9l4q7yr/out.dat?dl=1 out.dat
+https://www.dropbox.com/s/7405360wu7y3syg/sort.dat?dl=1 sort.dat
+https://www.dropbox.com/s/vgp0bvjp70mds7n/input_64_512_960.dat?dl=1 input_64_512_960.dat
+https://www.dropbox.com/s/hnf6ypnh6z3j6rd/kernel_5.dat?dl=1 kernel_5.dat
+https://www.dropbox.com/s/cszz8mye9p7j0sy/output_64_512_960x5.dat?dl=1 output_64_512_960x5.dat
