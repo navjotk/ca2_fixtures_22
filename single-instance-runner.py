@@ -19,9 +19,9 @@ from executor import run_executable
 @click.option('--results-file', required=True, help='Where to write the results')
 @click.option('--num-par', required=True, type=int,
               help='Number of parallel processors')
-@click.option('--parallel', type=click.Choice(['MPI', 'OpenMP']),
-              case_sensitive=False, required=True,
-              help='Which kind of parallelism to use (OpenMP/MPI)')
+@click.option('--parallel', type=click.Choice(['MPI', 'OpenMP'],
+                                              case_sensitive=False),
+              required=True, help='Which kind of parallelism to use (OpenMP/MPI)')
 @click.option('--args', default=None, help='(Optional) Arguments for executable')
 def run(basedir, executable, identifier, results_file, num_par, parallel, args):
     all_data = []
