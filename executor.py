@@ -10,7 +10,7 @@ def run_executable(executable, args, num_threads=None, num_runs=1):
     if args is not None:
         command += " " + (" ").join(list(args))
 
-    print("Command: %s (%d threads)" % (command, num_threads))
+    print("Command: %s (%s threads)" % (command, str(num_threads)))
 
     c = shlex.split(command)
 
