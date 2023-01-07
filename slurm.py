@@ -38,6 +38,7 @@ def call_slurm(slurm_file, context_dir, dependencies=None):
     if dependencies is None:
         p = run_command("sbatch --nice \"%s\"" % slurm_file, cwd=context_dir)
     else:
+        dependencies = [str(x) for x in dependencies]
         p = run_command("sbatch --nice --depend=afterany:%s \"%s\"" % (",".join(dependencies), slurm_file), cwd=context_dir)
         
     output = p.stdout.decode('utf-8')
