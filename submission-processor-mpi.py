@@ -85,9 +85,10 @@ def run(basedir, identifier, artifacts_path):
     for e in executables:
         for c in rank_nums:
             job_id = submit_job_for_run(e, c, identifier, artifacts_path, basedir)
+            print(job_id)
             job_ids.append(job_id)
-
-    print(submit_cleanup_job(basedir, identifier, artifacts_path, job_ids))
+    if len(job_ids)>0:
+        print(submit_cleanup_job(basedir, identifier, artifacts_path, job_ids))
 
 
 if __name__=="__main__":
