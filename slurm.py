@@ -6,7 +6,7 @@ from executor import run_command
 
 def submit_slurm_job(commands, template_file, num_cores=1,
                      num_tasks=1, time_limit=1, partition="course",
-                     cwd=None, vars=None):
+                     cwd=None, vars=None, dependencies=None):
     if vars is None:
         vars = {}
     
@@ -27,15 +27,19 @@ def submit_slurm_job(commands, template_file, num_cores=1,
     with open(target_slurm_filename, "w") as text_file:
         text_file.write(submission_file_string)
 
-    job_id = call_slurm(target_slurm_filename, cwd)
+    job_id = call_slurm(target_slurm_filename, cwd, dependencies)
 
     os.remove(target_slurm_filename)
 
     return job_id
 
 
-def call_slurm(slurm_file, context_dir):
-    p = run_command("sbatch --nice \"%s\"" % slurm_file, cwd=context_dir)
+def call_slurm(slurm_file, context_dir, dependencies=None):
+    if dependencies is None:
+        p = run_command("sbatch --nice \"%s\"" % slurm_file, cwd=context_dir)
+    else:
+        p = run_command("sbatch --nice --depend=afterany:%s \"%s\"" % (",".join(dependencies), slurm_file), cwd=context_dir)
+        
     output = p.stdout.decode('utf-8')
     print(output)
     parts_of_output = output.split(" ")

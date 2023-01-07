@@ -48,6 +48,19 @@ def submit_job_for_run(exe, num_par, identifier, artifacts_path, basedir):
     return submit_slurm_job([command_to_run], slurm_template, cwd=basedir,
                             time_limit=60, num_cores=1, num_tasks=num_par)
 
+def submit_cleanup_job(basedir, identifier, artifacts_path, dependencies):
+    command_to_run = ["python", os.path.join(artifacts_path, "cleanup-user.py")]
+    command_to_run += ["--basedir", basedir]
+    command_to_run += ["--identifier", str(identifier)]
+    command_to_run += ["--leaderboard-path", artifacts_path]
+    command_to_run += ["--iresults", "iresults.csv"]
+    
+    command_to_run = " ".join(command_to_run)
+    slurm_template = os.path.join(artifacts_path, "slurm_template.tpl")
+    return submit_slurm_job([command_to_run], slurm_template, cwd=basedir,
+                            time_limit=60, num_cores=1, dependencies=dependencies)
+
+
 @click.command()
 @click.option('--basedir', default=None, help='Directory to find executables')
 @click.option('--identifier', required=True, help='Identify this submission')
@@ -73,6 +86,8 @@ def run(basedir, identifier, artifacts_path):
         for c in rank_nums:
             job_id = submit_job_for_run(e, c, identifier, artifacts_path, basedir)
             job_ids.append(job_id)
+
+    print(submit_cleanup_job(basedir, identifier, artifacts_path, job_ids))
 
 
 if __name__=="__main__":
