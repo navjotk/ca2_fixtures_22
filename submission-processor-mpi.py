@@ -54,7 +54,7 @@ def submit_cleanup_job(basedir, identifier, artifacts_path, dependencies):
     command_to_run += ["--identifier", str(identifier)]
     command_to_run += ["--leaderboard-path", artifacts_path]
     command_to_run += ["--iresults", "iresults.csv"]
-    
+    print("Scheduling cleanup job...")
     command_to_run = " ".join(command_to_run)
     slurm_template = os.path.join(artifacts_path, "slurm_template.tpl")
     return submit_slurm_job([command_to_run], slurm_template, cwd=basedir,
