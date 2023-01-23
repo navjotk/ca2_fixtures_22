@@ -6,7 +6,8 @@ from executor import run_command
 
 def submit_slurm_job(commands, template_file, num_cores=1,
                      num_tasks=1, time_limit=1, partition="course",
-                     cwd=None, vars=None, dependencies=None):
+                     cwd=None, vars=None, dependencies=None,
+                     job_name="slurm-job"):
     if vars is None:
         vars = {}
     
@@ -20,7 +21,7 @@ def submit_slurm_job(commands, template_file, num_cores=1,
                                                         num_tasks=num_tasks,
                                                         time_limit=time_limit,
                                                         partition=partition,
-                                                        vars=vars)
+                                                        vars=vars, job_name=job_name)
 
     target_slurm_filename = os.path.join(cwd, 'submission.sh')
 

@@ -1,5 +1,5 @@
 #!/bin/bash -l
-
+#SBATCH --job-name=${job_name}
 # Specific course queue and max wallclock time
 #SBATCH -t ${time_limit} -p ${partition} -c ${num_cores} -n ${num_tasks}
 
