@@ -44,8 +44,10 @@ def submit_job_for_run(exe, num_par, identifier, artifacts_path, basedir):
     command_to_run += ["--parallel", "MPI"]
 
     command_to_run = " ".join(command_to_run)
+    cleanup_command = "rm %s" % args[-1]
+
     slurm_template = os.path.join(artifacts_path, "slurm_template.tpl")
-    return submit_slurm_job([command_to_run], slurm_template, cwd=basedir,
+    return submit_slurm_job([command_to_run, cleanup_command], slurm_template, cwd=basedir,
                             time_limit=60, num_cores=1, num_tasks=num_par)
 
 def submit_cleanup_job(basedir, identifier, artifacts_path, dependencies):

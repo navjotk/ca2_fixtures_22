@@ -37,7 +37,7 @@ def run(basedir, executable, identifier, results_file, num_par, parallel, args):
     else:
         num_threads = num_par
 
-    runtime = run_executable(e_full_path, args, num_threads, num_runs=3)
+    runtime = run_executable(e_full_path, args, num_threads, num_runs=3, capture_output=False)
 
     if runtime is None:
         print("Provided command is erroring out. Timings are meaningless. Moving on...")

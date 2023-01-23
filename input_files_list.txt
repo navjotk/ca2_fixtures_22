@@ -6,3 +6,6 @@ https://www.dropbox.com/s/7405360wu7y3syg/sort.dat?dl=1 sort.dat
 https://www.dropbox.com/s/vgp0bvjp70mds7n/input_64_512_960.dat?dl=1 input_64_512_960.dat
 https://www.dropbox.com/s/hnf6ypnh6z3j6rd/kernel_5.dat?dl=1 kernel_5.dat
 https://www.dropbox.com/s/cszz8mye9p7j0sy/output_64_512_960x5.dat?dl=1 output_64_512_960x5.dat
+https://www.dropbox.com/s/r4twcrvkjqrgzj4/a3.dat?dl=1 a3.dat
+https://www.dropbox.com/s/4w1crss6k3tl6et/b3.dat?dl=1 b3.dat
+https://www.dropbox.com/s/gdoyji83nj6fs3j/c3.dat?dl=1 c3.dat

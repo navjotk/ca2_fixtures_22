@@ -4,7 +4,7 @@ import subprocess
 from contexttimer import Timer
 
 
-def run_executable(executable, args, num_threads=None, num_runs=1):
+def run_executable(executable, args, num_threads=None, num_runs=1, capture_output=True):
     command = executable
     
     if args is not None:
@@ -24,7 +24,7 @@ def run_executable(executable, args, num_threads=None, num_runs=1):
     timings = []
     for i in range(num_runs):
         with Timer() as t:
-            p = subprocess.run(c, capture_output=True, text=True, env=my_env)
+            p = subprocess.run(c, capture_output=capture_output, text=True, env=my_env)
         
         if(p.returncode):
             print(p.stdout)
