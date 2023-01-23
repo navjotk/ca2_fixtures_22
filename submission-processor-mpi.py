@@ -47,7 +47,7 @@ def submit_job_for_run(exe, num_par, identifier, artifacts_path, basedir):
     cleanup_command = "rm %s" % args[-1]
 
     slurm_template = os.path.join(artifacts_path, "slurm_template.tpl")
-    job_name = "%s_%s_%s" % (str(identifier), exe, str(num_par))
+    job_name = "%s_%s_%s" % (str(identifier), exe["name"], str(num_par))
     return submit_slurm_job([command_to_run, cleanup_command], slurm_template, cwd=basedir,
                             time_limit=60, num_cores=1, num_tasks=num_par, job_name=job_name)
 
