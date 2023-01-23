@@ -47,8 +47,9 @@ def submit_job_for_run(exe, num_par, identifier, artifacts_path, basedir):
     cleanup_command = "rm %s" % args[-1]
 
     slurm_template = os.path.join(artifacts_path, "slurm_template.tpl")
+    job_name = "%d_%s_%d" % (identifier, exe, num_par)
     return submit_slurm_job([command_to_run, cleanup_command], slurm_template, cwd=basedir,
-                            time_limit=60, num_cores=1, num_tasks=num_par)
+                            time_limit=60, num_cores=1, num_tasks=num_par, job_name=job_name)
 
 def submit_cleanup_job(basedir, identifier, artifacts_path, dependencies):
     command_to_run = ["python", os.path.join(artifacts_path, "cleanup-user.py")]
@@ -56,11 +57,13 @@ def submit_cleanup_job(basedir, identifier, artifacts_path, dependencies):
     command_to_run += ["--identifier", str(identifier)]
     command_to_run += ["--leaderboard-path", artifacts_path]
     command_to_run += ["--iresults", "iresults.csv"]
-    print("Scheduling cleanup job...")
+    
     command_to_run = " ".join(command_to_run)
     slurm_template = os.path.join(artifacts_path, "slurm_template.tpl")
+    job_name = "%d_cleanup" % identifier
     return submit_slurm_job([command_to_run], slurm_template, cwd=basedir,
-                            time_limit=60, num_cores=1, dependencies=dependencies)
+                            time_limit=60, num_cores=1, dependencies=dependencies,
+                            job_name=job_name)
 
 
 @click.command()
